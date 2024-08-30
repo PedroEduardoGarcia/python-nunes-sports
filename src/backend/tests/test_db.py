@@ -1,9 +1,11 @@
 import pytest
 import asyncpg
 import os
+from typing import Optional
 
 @pytest.mark.asyncio
-async def test_connection():
+async def test_connection() -> None:
+    conn: Optional[asyncpg.Connection] = None
     try:
         conn = await asyncpg.connect(
             user=os.getenv("DB_USER"),
@@ -13,7 +15,8 @@ async def test_connection():
             port=os.getenv("DB_PORT"),
         )
 
-        version = await conn.fetchval('SELECT version()')        
+        version = await conn.fetchval('SELECT version()')
+        # Assert that the version is not None, indicating a successful query 
         assert version is not None, "Failed to fetch PostgreSQL version"
         
     except Exception as e:

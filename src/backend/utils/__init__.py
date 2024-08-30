@@ -1,0 +1,1 @@
+from .rand_gen import generate_unique_code

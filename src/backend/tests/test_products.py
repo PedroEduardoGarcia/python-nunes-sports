@@ -1,8 +1,7 @@
 import os, pytest
-from datetime import datetime
+from models import Product
 from repositories import PostgresRepository
 from services import ProductService
-from models import Product
 from utils import random_product
 
 @pytest.mark.asyncio

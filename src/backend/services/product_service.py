@@ -1,6 +1,6 @@
+import asyncpg
 from typing import Optional, List
 from models import Product
-import asyncpg
 
 class ProductService:
     def __init__(self, pool: asyncpg.Pool):

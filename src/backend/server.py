@@ -1,8 +1,8 @@
-from typing import Dict, Any, AsyncGenerator
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Dict, Any, AsyncGenerator
 from repositories import PostgresRepository
-import os
 
 app = FastAPI()
 

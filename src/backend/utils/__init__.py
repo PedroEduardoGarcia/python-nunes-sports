@@ -1,1 +1,1 @@
-from .rand_gen import generate_unique_code
+from .rand_gen import generate_unique_code, random_price, random_product, random_string

@@ -3,6 +3,7 @@ from datetime import datetime
 from repositories import PostgresRepository
 from services import ProductService
 from models import Product
+from utils import random_product
 
 @pytest.mark.asyncio
 async def test_connection_repo() -> None:
@@ -22,13 +23,14 @@ async def test_connection_repo() -> None:
             assert version is not None, "Failed to fetch PostgreSQL version"
 
             product_service = ProductService(pool)
-
+            random_p = random_product()
             new_product = Product(
-                code="P001", 
-                description="Sample Product", 
-                category="Category A", 
-                price=19.99,
-                created_at=datetime.now()
+                name=random_p["name"],
+                code=random_p["code"],
+                description=random_p["description"], 
+                category=random_p["category"], 
+                price=random_p["price"],
+                created_at=random_p["created_at"]
             )
             product_id = await product_service.create_product(new_product)
             # Assert that the product is not None, indicating a successful product creation

@@ -9,30 +9,33 @@ class PostgresRepository(BaseRepository):
         self.database = database
         self.host = host
         self.port = port
-        self.conn: Optional[asyncpg.Connection] = None
+        self.pool: Optional[asyncpg.Pool] = None
 
-    async def connect(self) -> Optional[asyncpg.Connection]:
-        """Establish and return a database connection."""
+    async def connect(self) -> Optional[asyncpg.Pool]:
+        """Establish a connection pool."""
         try:
-            self.conn = await asyncpg.connect(
+            self.pool = await asyncpg.create_pool(
                 user=self.user,
                 password=self.password,
                 database=self.database,
                 host=self.host,
                 port=self.port,
+                min_size=1,
+                max_size=10
             )
         except Exception as e:
-            print(f"Failed to connect to the database: {e}")
-        return self.conn
+            print(f"Failed to create a connection pool: {e}")
+        return self.pool
 
     async def get_version(self) -> Optional[str]:
-        """Retrieve the PostgreSQL version."""
-        if self.conn:
-            return await self.conn.fetchval('SELECT version()')
+        """Retrieve the PostgreSQL version using a connection from the pool."""
+        if self.pool:
+            async with self.pool.acquire() as conn:
+                return await conn.fetchval('SELECT version()')
         return None
 
     async def close(self) -> None:
-        """Close the database connection."""
-        if self.conn:
-            await self.conn.close()
-            self.conn = None
+        """Close the connection pool."""
+        if self.pool:
+            await self.pool.close()
+            self.pool = None

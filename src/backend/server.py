@@ -1,6 +1,8 @@
-from typing import Dict, Any
+from typing import Dict, Any, AsyncGenerator
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from repositories import PostgresRepository
+import os
 
 app = FastAPI()
 
@@ -15,6 +17,23 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Initialize repository and services
+repo = PostgresRepository(
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME"),
+    host=os.getenv("DB_HOST"),
+    port=os.getenv("DB_PORT"),
+)
+
+async def lifespan(app: FastAPI) -> AsyncGenerator:
+    """Lifespan context manager to manage startup and shutdown events."""
+    await repo.connect()
+    yield
+    await repo.close()
+
+app = FastAPI(lifespan=lifespan)
 
 @app.post("/api/post")
 async def post_message(data: Dict[str, Any]) -> Dict[str, str]:

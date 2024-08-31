@@ -18,7 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize repository and services
 repo = PostgresRepository(
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),

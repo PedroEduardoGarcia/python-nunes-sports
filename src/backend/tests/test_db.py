@@ -1,5 +1,4 @@
 import asyncpg, os, pytest, socket
-from typing import Optional
 from repositories import PostgresRepository
 
 @pytest.mark.asyncio
@@ -40,8 +39,10 @@ async def test_connection_failure_repo() -> None:
         if pool:
             pytest.fail("Expected connection pool creation to fail, but it succeeded")
     except Exception as e:
+        # Assert if an asyncpg.PostgresError exception is caught, as expected for invalid credentials
         if isinstance(e, asyncpg.PostgresError):
             assert True, "Caught a PostgresError as expected"
+        # Assert if a socket.gaierror exception is caught, as expected for invalid host/port
         elif isinstance(e, socket.gaierror):
             assert True, "Caught a socket.gaierror as expected"
         else:

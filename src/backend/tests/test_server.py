@@ -5,7 +5,7 @@ from httpx import Response
 async def test_post_message() -> None:
     async with httpx.AsyncClient(base_url="http://localhost:3000") as client:
         response: Response = await client.post(
-            "/api/post",
+            "/api/test",
             json={"username": "JohnDoe"}
         )
     # Assert that the response status code is 200 OK

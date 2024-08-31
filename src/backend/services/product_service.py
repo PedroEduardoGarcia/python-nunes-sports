@@ -9,13 +9,14 @@ class ProductService:
     async def create_product(self, product: Product) -> Optional[int]:
         """Insert a new product into the database and return the product's ID."""
         query = """
-        INSERT INTO products (code, description, category, price, created_at)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO products (name, code, description, category, price, created_at)
+        VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id;
         """
         async with self.pool.acquire() as conn:
             product_id = await conn.fetchval(
-                query, 
+                query,
+                product.name,
                 product.code, 
                 product.description, 
                 product.category, 
@@ -27,7 +28,7 @@ class ProductService:
     async def get_product_by_id(self, product_id: int) -> Optional[Product]:
         """Retrieve a product by its ID."""
         query = """
-        SELECT id, code, description, category, price, created_at
+        SELECT id, name, code, description, category, price, created_at
         FROM products
         WHERE id = $1;
         """
@@ -41,12 +42,13 @@ class ProductService:
         """Update an existing product by its ID."""
         query = """
         UPDATE products
-        SET code = $1, description = $2, category = $3, price = $4, created_at = $5
-        WHERE id = $6;
+        SET name = $1, code = $2, description = $3, category = $4, price = $5, created_at = $6
+        WHERE id = $7;
         """
         async with self.pool.acquire() as conn:
             result = await conn.execute(
                 query,
+                updated_product.name,
                 updated_product.code,
                 updated_product.description,
                 updated_product.category,
@@ -68,7 +70,7 @@ class ProductService:
     async def list_products(self) -> List[Product]:
         """Retrieve all products from the database."""
         query = """
-        SELECT id, code, description, category, price, created_at
+        SELECT id, name, code, description, category, price, created_at
         FROM products;
         """
         async with self.pool.acquire() as conn:

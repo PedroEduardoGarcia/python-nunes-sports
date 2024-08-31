@@ -3,6 +3,7 @@ from decimal import Decimal
 from datetime import datetime
 
 class Product(BaseModel):
+    name: str
     code: str
     description: str
     category: str

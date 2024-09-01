@@ -15,7 +15,7 @@ O projeto está hospedado na aws, segue o link:
 
 ## Descrição do Projeto
 
-O projeto **python-nunes-sports** é uma aplicação web desenvolvida para atender ao requisito de um cliente fictício. O sistema permite a exibição, criação, edição e deleção de produtos que são criados com inputs aleatórios. O objetivo principal é mostrar a crição da aplicação com fronetend, backend e banco de dados com deploy na AWS, aplicando conceitos de Clean Code, SOLID e boas práticas de desenvolvimento. O frontend está servido em bucket s3 e o backend dockerizado em um ec2.
+O projeto **python-nunes-sports** é uma aplicação web desenvolvida para atender ao requisito de um cliente fictício. O sistema permite a exibição, criação, edição e deleção de produtos. O objetivo principal é mostrar a crição da aplicação com frontend, backend e banco de dados com deploy na AWS, aplicando conceitos de Clean Code, SOLID e boas práticas de desenvolvimento. O frontend está servido em bucket s3 e o backend dockerizado em um ec2.
 
 ## Requisitos
 
@@ -33,14 +33,14 @@ O projeto **python-nunes-sports** é uma aplicação web desenvolvida para atend
    - **Criação de Produtos:** Permitir a adição de novos produtos à base de dados.
    - **Edição de Produtos:** Permitir a modificação das informações de produtos existentes.
    - **Deleção de Produtos:** Permitir a remoção de produtos da base de dados.
-   - Todas as ações realizadas na página web devem refletir diretamente na base de dados.
+   - Todas as ações realizadas na página web refletem diretamente na base de dados.
 
 ## Tecnologias Utilizadas
 
 - **Backend:** FastAPI para construção da API.
 - **Frontend:** React para a interface web.
 - **Banco de Dados:** PostgreSQL para armazenar os dados dos produtos.
-- **Docker:** Para criar um ambiente de desenvolvimento isolado e facilitar a implantação.
+- **Docker:** Para criar um ambiente de desenvolvimento isolado e facilitar o deploy.
 - **Docker Compose:** Para orquestrar os contêineres do backend e do banco de dados.
 
 
@@ -52,7 +52,7 @@ O projeto **python-nunes-sports** é uma aplicação web desenvolvida para atend
 2. **Iniciar o Projeto:**
    - Navegue até a raiz do projeto e execute o seguinte comando para iniciar os contêineres:
      ```bash
-     docker-compose up --build
+     docker-compose up
      ```
    - Isso iniciará o backend e o banco de dados, e a aplicação estará acessível em `http://localhost:3000`.
 
@@ -84,4 +84,4 @@ docker-compose exec backend pytest -v tests/
 
 [**Pedro Eduardo Garcia - Github**](https://github.com/PedroEduardoGarcia)
 
-[P**edro Eduardo Garcia - Linkedin**](https://www.linkedin.com/in/pedro-eduardo-garcia-766774244/)
+[**Pedro Eduardo Garcia - Linkedin**](https://www.linkedin.com/in/pedro-eduardo-garcia-766774244/)
